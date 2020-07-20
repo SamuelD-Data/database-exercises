@@ -1,7 +1,10 @@
 USE employees;
 show tables;
 
+DESCRIBE employees;
+
 /*Data types in the employees table includes date, int, enum, and varchar.
+
 I expect at least one numeric column to appear in the salaries table.
 
 I expect at least one string column to appear in the employees table.
