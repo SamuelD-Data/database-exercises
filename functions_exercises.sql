@@ -1,3 +1,5 @@
+USE employees;
+
 -- COPY THE ORDER BY EXERCISES --
 
 /*Modify your first query to order by first name. The first result should be Irena Reutenauer and the last result should be Vidya Simmen.*/
