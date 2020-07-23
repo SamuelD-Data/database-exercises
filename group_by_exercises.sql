@@ -102,7 +102,15 @@ HAVING COUNT(*) > 1;
 
 /* Answer: Yes, there are duplicates as seen in the results of the code above. For example, there are 2 "aaamo_0359" usernames.
 
-Bonus: how many duplicate usernames are there?
+Bonus: how many duplicate usernames are there? */
 
-/* Answer: There are 13251 duplicate usernames since after running the code above, MYSQL reflects that there are 13251 rows in the results.
-In other words, there are 13251 usernames that were assigned more than once.*/
+SELECT sum(temp.username_count)
+FROM (
+        SELECT CONCAT(LOWER(SUBSTR(first_name, 1, 1)), LOWER(SUBSTR(last_name, 1, 4)), "_", SUBSTR(birth_date, 6, 2), SUBSTR(birth_date, 3, 2)) AS username, COUNT(*) as username_count
+        FROM employees
+        GROUP BY username
+        ORDER BY username_count DESC
+) as temp
+WHERE username_count > 1;
+
+/* Answer: There are 27,403 username duplicates total. */
