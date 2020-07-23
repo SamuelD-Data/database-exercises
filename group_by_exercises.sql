@@ -94,7 +94,8 @@ SELECT
 		LOWER(SUBSTR(last_name, 1, 4)) , 
 		"_", SUBSTR(birth_date, 6, 2), 
 		SUBSTR(birth_date, 3, 2)) 
-	as USERNAME, COUNT(*)
+	as USERNAME, 
+	COUNT(*)
 FROM employees
 GROUP BY USERNAME
 HAVING COUNT(*) > 1;
