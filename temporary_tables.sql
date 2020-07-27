@@ -42,16 +42,16 @@ FROM sakila.payment;
 
 -- Write the SQL necessary to transform the amount column such that it is stored as an integer representing the number of cents of the payment. For example, 1.99 should become 199.
 
-ALTER TABLE payment ADD amount_v2 INT(50);
+ALTER TABLE payment ADD amount_v2 INT(50); -- add new column that will store amounts as cents
 
 UPDATE payment 
-SET amount_v2 = amount * 100;
+SET amount_v2 = amount * 100; -- populate new column with amount values * 100 to convert to cents
 
-ALTER TABLE payment MODIFY amount_v2 INT(50) AFTER amount;
+ALTER TABLE payment MODIFY amount_v2 INT(50) AFTER amount; -- move new column next to amount column
 
-ALTER TABLE payment DROP COLUMN amount;
+ALTER TABLE payment DROP COLUMN amount; -- drop old amount column
 
-ALTER TABLE payment CHANGE amount_v2 amount INT(50);
+ALTER TABLE payment CHANGE amount_v2 amount INT(50); -- change name of new column to match old column
 
 -- Find out how the average pay in each department compares to the overall average pay. In order to make the comparison easier, you should use the Z-score for salaries. 
 
