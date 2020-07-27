@@ -73,14 +73,14 @@ AND to_date > curdate();
 	
 -- What percentage of all salaries is this? 78 salaries --
 
-SELECT
-	CONCAT ((SELECT COUNT(salaries.salary) as salaries_above_avg
+SELECT CONCAT ((SELECT COUNT(salaries.salary) as salaries_above_avg
 	FROM salaries
 	WHERE salaries.salary >=  
 			((select MAX(salary) from salaries) - (select std(salary) from salaries))
 	AND salaries.to_date> curdate()) 
 	/ (select COUNT(salaries.salary) from salaries) * 100, '%')
 as percent_of_salaries;
+
 
 -- BONUS QUESTIONS -- 
 
