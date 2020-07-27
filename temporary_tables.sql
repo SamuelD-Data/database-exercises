@@ -23,7 +23,16 @@ ALTER TABLE employees_with_departments DROP COLUMN last_name;
 
 -- What is another way you could have ended up with this same table?
 
+CREATE TEMPORARY TABLE employees_with_departments AS
+SELECT *
+FROM employees.employees_with_departments;
 
+ALTER TABLE employees_with_departments ADD full_name VARCHAR(100);
+
+UPDATE employees_with_departments
+SET full_name = CONCAT(first_name, ' ', last_name);
+
+ALTER TABLE employees_with_departments DROP COLUMN first_name, DROP COLUMN last_name;
 
 -- Create a temporary table based on the payment table from the sakila database.
 
