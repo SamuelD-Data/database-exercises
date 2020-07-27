@@ -35,9 +35,11 @@ GROUP BY titles.title;
 
 select count(distinct emp_no) 
 from employees 
-where emp_no not in (select emp_no 
-					from dept_emp
-					where to_date = '9999-01-01');
+where emp_no not in (
+	select emp_no 
+	from dept_emp
+	where to_date > curdate()
+);
 	
 -- Find all the current department managers that are female.--
 
@@ -58,16 +60,16 @@ WHERE salaries.salary > (
 	FROM salaries)
 and salaries.to_Date > curdate();
 
--- How many current salaries are within 1 standard deviation of the highest salary? (Hint: you can use a built in function to calculate the standard deviation.) --
+-- Find all employees whos current salaries are within 1 standard deviation of the highest salary? (Hint: you can use a built in function to calculate the standard deviation.) --
 
-SELECT COUNT(salaries.salary) as salaries_above_avg
+SELECT employees.first_name, employees.last_name, salary
 FROM salaries
-WHERE salaries.salary 
-	BETWEEN  
-		((select MAX(salary) from salaries) - (select std(salary) from salaries))
-	AND 
-		(select MAX(salary) from salaries) 
-	AND salaries.to_date> curdate();
+JOIN employees on employees.emp_no = salaries.emp_no
+WHERE salaries.salary >=
+		(
+		(select MAX(salary) from salaries) - (select std(salary) from salaries)
+)
+AND to_date > curdate();
 	
 -- What percentage of all salaries is this? 78 salaries --
 
@@ -77,11 +79,10 @@ SELECT
 	WHERE salaries.salary >=  
 			((select MAX(salary) from salaries) - (select std(salary) from salaries))
 	AND salaries.to_date> curdate()) 
-	/ (select COUNT(salaries.salary) from salaries WHERE salaries.to_date > curdate()) * 100, '%')
+	/ (select COUNT(salaries.salary) from salaries) * 100, '%')
 as percent_of_salaries;
 
 -- BONUS QUESTIONS -- 
-
 
 -- Find all the department names that currently have female managers. --
 
