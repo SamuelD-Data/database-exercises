@@ -28,10 +28,19 @@ from employees;
 
 -- What is the average salary for each of the following department groups: R&D, Sales & Marketing, Prod & QM, Finance & HR, Customer Service? --
 
-select substr(birth_date, 1,4)
-from employees;
+select 
+	CASE 
+		WHEN dept_name = 'Customer Service' THEN 'Customer Service'
+		WHEN dept_name = 'Finance' OR dept_name = 'Human Resources' THEN 'Finance & HR'
+		WHEN dept_name = 'Sales' OR dept_name = 'Marketing' THEN 'Sales & Marketing'
+		WHEN dept_name = 'Production' OR dept_name = 'Quality Management' THEN 'Prod & QM'
+		WHEN dept_name = 'Research' OR dept_name = 'Development' THEN 'R&D'
+		ELSE null
+		END as department_groups,
+		round(avg(salary),2) as avg_dept_grp_sal
+from salaries as S
+join dept_emp as DE ON DE.emp_no = S.emp_no
+join departments as D on D.dept_no = DE.dept_no
+group by department_groups
+;
 
--- still confused, this runs but returns no results
-select substr(last_name,1,1)
-FROM employees
-where REGEXP([abc];
