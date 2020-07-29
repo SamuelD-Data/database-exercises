@@ -1,3 +1,5 @@
+USE employees;
+
 -- Write a query that returns all employees (emp_no), their department number, their start date, their end date, and a new column 'is_current_employee' that is a 1 if the employee is still with the company and 0 if not.
 
 SELECT emp.emp_no, d.dept_no, emp.start_date, emp.end_date, emp.is_current_emp
