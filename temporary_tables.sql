@@ -59,8 +59,8 @@ ALTER TABLE payment CHANGE amount_v2 amount INT(50); -- change name of new colum
 
 create temporary table z_score_V3 as 
 select dept_name, avg(salary) as avg_dept_sal
-from zscore
-JOIN employees.dept_emp as DE on DE.emp_no = zscore.emp_no -- Create temp table that contains each dept with the respective avg. salaries
+from employees.salaries as S
+JOIN employees.dept_emp as DE on DE.emp_no = S.emp_no -- Create temp table that contains each dept with the respective avg. salaries
 JOIN employees.departments as D on D.dept_no = DE.dept_no
 GROUP BY dept_name;
 
